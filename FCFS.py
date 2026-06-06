@@ -1,5 +1,5 @@
 from Proces import Process
-from Dane import load_processes_from_file
+from Dane import load_processes_for_time
 
 #algorytm FCFS
 def FCFS(input_processes: list[Process]):
@@ -39,5 +39,5 @@ def FCFS(input_processes: list[Process]):
     
 if __name__ == "__main__":
     print(f"Algorytm FCFS:")
-    FCFS(load_processes_from_file("dane\\dane_czas_scenariusz[0]_[0].csv"))
+    FCFS(load_processes_for_time("dane\\dane_czas_scenariusz[0]_[0].csv"))
         

@@ -3,7 +3,7 @@ import numpy as np
 import os
 from Proces import Process
 
-def generate_test_data_to_file(filename: str, num_processes: int, scenario: int):
+def generate_test_data_for_time(filename: str, num_processes: int, scenario: int):
     # 1. Tworzymy pustą listę, do której będziemy wrzucać wygenerowane procesy
     generated_data = []
     
@@ -32,22 +32,21 @@ def generate_test_data_to_file(filename: str, num_processes: int, scenario: int)
     generated_data.sort(key=lambda x: x[0])
 
     # 4. Zapisujemy już POSORTOWANE dane do pliku CSV
-    with open(filename, mode='w', newline='') as file:
+    with open(filename, 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(["arrivalTime", "executionTime"]) # Nagłówek
         
         # Zapisujemy wszystkie posortowane rzędy
         writer.writerows(generated_data)
-            
-    print(f"Wygenerowano pomyślnie {num_processes} procesów do pliku '{filename}' (Scenariusz {scenario}).")
+
 
 #wczytywanie procesów z pliku csv
-def load_processes_from_file(filename: str) -> list:
+def load_processes_for_time(filename: str) -> list:
     #lista z załodwanymi procesami
     loaded_processes = []
     
     #otwieramy plik
-    with open(filename, mode='r') as file:
+    with open(filename, 'r') as file:
         #czytamy plik csv
         reader = csv.DictReader(file)
         
@@ -62,6 +61,19 @@ def load_processes_from_file(filename: str) -> list:
     #zwracamy liste
     return loaded_processes
 
+def generate_test_data_for_pages(filename: str, num_pages: int, num_lines: int):
+    with open(filename, 'w') as file:
+        for _ in range(0, num_lines):
+            side = str(np.random.randint(1, num_pages+1))+"\n"
+            file.write(side)
+
+def load_pages(filename: str) -> list:
+    sides=[]
+    with open(filename, 'r') as file:
+        for line in file.readlines():
+            sides.append(int(line.strip()))
+    return sides           
+
 if __name__ == "__main__":
     choice = int(input("Wygeneruj dane dla(1/2):\n1.(planowanie czasu procesora)\n2.(zamiana stron)\n: "))
     
@@ -69,8 +81,15 @@ if __name__ == "__main__":
             os.mkdir("dane")
             
     if choice == 1:
-        for i in range(0, 100):
-            generate_test_data_to_file(f"dane/dane_czas_scenariusz[0]_[{i}].csv", 100, 0)
+        if not os.path.exists("dane/czas"):
+            os.mkdir("dane/czas")
+        for scenariusz in range(0, 4):
+            os.makedirs(f"dane/czas/scenariusz[{scenariusz}]", exist_ok=True)
+            for i in range(0, 100):
+                generate_test_data_for_time(f"dane/czas/scenariusz[{scenariusz}]/dane_czas_scenariusz[{scenariusz}]_[{i}].csv", 100, scenariusz)
     else:
-        pass
+        if not os.path.exists("dane/strony"):
+            os.mkdir("dane/strony")
+        for i in range (0, 100):
+            generate_test_data_for_pages(f"dane/strony/dane_strony[{i}].txt", 20, 100)
         

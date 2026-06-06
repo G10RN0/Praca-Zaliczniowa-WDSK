@@ -1,4 +1,4 @@
-from Dane import load_processes_from_file
+from Dane import load_processes_for_time
 from Proces import Process
 
 def roundRobin(processes: list[Process], timeQuanta: float):
@@ -68,4 +68,4 @@ if __name__ == "__main__":
     for quanta in timeQuanta:
         print("")
         print(f"Round Robin dla kwanty czasu: {quanta}")
-        roundRobin(load_processes_from_file("dane\\dane_czas_scenariusz[0]_[0].csv"), quanta)
+        roundRobin(load_processes_for_time("dane\\dane_czas_scenariusz[0]_[0].csv"), quanta)

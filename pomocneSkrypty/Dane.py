@@ -1,7 +1,7 @@
 import csv
 import numpy as np
 import os
-from Proces import Process
+
 
 def generate_test_data_for_time(filename: str, num_processes: int, scenario: int):
     # 1. Tworzymy pustą listę, do której będziemy wrzucać wygenerowane procesy
@@ -75,21 +75,32 @@ def load_pages(filename: str) -> list:
     return sides           
 
 if __name__ == "__main__":
-    choice = int(input("Wygeneruj dane dla(1/2):\n1.(planowanie czasu procesora)\n2.(zamiana stron)\n: "))
+    from Proces import Process
     
+    #sprawdzamy czy istnieje folder dane jak nie to go tworzymy 
     if not os.path.exists("dane"):
             os.mkdir("dane")
+    #sprawdzamy czy istnieje folder czas w folderze dane jak nie to go tworzymy 
+    if not os.path.exists("dane/czas"):
+        os.mkdir("dane/czas")
+    
+    #sprawdzamy czy istnieje folder strony w folderze dane jak nie to go tworzymy 
+    if not os.path.exists("dane/strony"):
+        os.mkdir("dane/strony")
+    
+    #generacja danych
+    for scenariusz in range(0, 4):
+        os.makedirs(f"dane/czas/scenariusz[{scenariusz}]", exist_ok=True)
+        for i in range(0, 100):
+            generate_test_data_for_time(f"dane/czas/scenariusz[{scenariusz}]/dane_czas_scenariusz[{scenariusz}]_[{i}].csv", 100, scenariusz)
+                
+    #generujemy dane dla zamiany stron
+    lines=[10, 25, 50, 75, 100]
+    for i in range(len(lines)):
+        os.makedirs(f"dane/strony/scenariusz[{i}]", exist_ok=True)
+        for j in range (0, 100):
+            generate_test_data_for_pages(f"dane/strony/scenariusz[{i}]/dane_strony[{j}].txt", 20, lines[i])
             
-    if choice == 1:
-        if not os.path.exists("dane/czas"):
-            os.mkdir("dane/czas")
-        for scenariusz in range(0, 4):
-            os.makedirs(f"dane/czas/scenariusz[{scenariusz}]", exist_ok=True)
-            for i in range(0, 100):
-                generate_test_data_for_time(f"dane/czas/scenariusz[{scenariusz}]/dane_czas_scenariusz[{scenariusz}]_[{i}].csv", 100, scenariusz)
-    else:
-        if not os.path.exists("dane/strony"):
-            os.mkdir("dane/strony")
-        for i in range (0, 100):
-            generate_test_data_for_pages(f"dane/strony/dane_strony[{i}].txt", 20, 100)
-        
+    print("Dane zostały wygenerowane")
+else:
+    from pomocneSkrypty.Proces import Process

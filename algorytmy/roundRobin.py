@@ -6,6 +6,9 @@ def roundRobin(processes: list[Process], timeQuanta: float):
     
     #tworzymy kopie listy
     unprocessed = processes.copy()
+    #sortujemy listę
+    unprocessed.sort(key=lambda x: x.arrivalTime)
+    
     #procesy które zostały zakończone
     complited_process = []
     #procesy które są w trakcie trwania
@@ -58,9 +61,7 @@ def roundRobin(processes: list[Process], timeQuanta: float):
     
     avg_turnAroundTime = sum(process.turnAroundTime for process in complited_process) / len(complited_process)
     avg_waitingTime = sum(process.waitingTime for process in complited_process) / len(complited_process)
-    
-    print(f"średnia czekania procesu: {avg_waitingTime}, średnia czas cyklu przetwarzania: {avg_turnAroundTime}")
-    
+        
     #zwracamy średnie
     return avg_waitingTime, avg_turnAroundTime
 

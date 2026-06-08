@@ -1,5 +1,5 @@
-from Proces import Process
-from Dane import load_processes_for_time
+from pomocneSkrypty.Proces import Process
+from pomocneSkrypty.Dane import load_processes_for_time
 
 #algorytm FCFS
 def FCFS(input_processes: list[Process]):

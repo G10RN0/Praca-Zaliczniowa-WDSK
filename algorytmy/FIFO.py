@@ -1,8 +1,10 @@
-from Dane import load_pages
+from pomocneSkrypty.Dane import load_pages
 
-def LRU(pages: list[int], R: int) -> int:
+#funkcja wykonująca algorymt FIFO
+def FIFO(pages: list[int], R: int) -> int:
     frames = []
     page_faults = 0
+    
     #iterujmy przez wszystkie strony w danych
     for page in pages:
         #sprawdzamy czy strony nie ma obecnie w pamięci
@@ -16,16 +18,13 @@ def LRU(pages: list[int], R: int) -> int:
             
             #dodajemy strone do ramki
             frames.append(page)
-        
-        #jeśli jest w ramce to przeucamy je na koniec ramki
-        else:
-            frames.remove(page)
-            frames.append(page)
+    
+    #zwracmy licznik błędów
     return page_faults
 
 if __name__ == "__main__":
     pages = load_pages("dane/strony/dane_strony[0].txt")
     
     for size in [3, 5, 7]:
-        fifo_faults = LRU(pages, size)
+        fifo_faults = FIFO(pages, size)
         print(f"Błędy stron dla FIFO (R={size}): {fifo_faults}")

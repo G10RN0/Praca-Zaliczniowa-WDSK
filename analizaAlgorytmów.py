@@ -1,8 +1,8 @@
-from FIFO import FIFO
-from LRU import LRU
-from roundRobin import roundRobin
-from FCFS import FCFS
-from Dane import load_pages, load_processes_for_time
+from algorytmy.FIFO import FIFO
+from algorytmy.LRU import LRU
+from algorytmy.roundRobin import roundRobin
+from algorytmy.FCFS import FCFS
+from pomocneSkrypty.Dane import load_pages, load_processes_for_time
 
 
 def analizuj_procesor():

@@ -22,8 +22,6 @@ def analizuj_procesor():
     #Zmienne do trzymania sum wyników ze 100 plików dla Round Robin
     timeQuanta=[0.5, 3, 5]
     
-    print("Rozpoczynam analizę algorytmów planowania czasu procesora...")
-    
     # Główna pętla przechodząca przez 4 wygenerowane scenariusze (od 0 do 3)
     for scenariusz in range(num_scenariuszy):
         # Zmienne do trzymania sum wyników ze plików dla FCFS
@@ -102,16 +100,15 @@ def analiza_stron():
     files_num=100
     
     #wielkości ramek
-    frame_sizes=[3, 5, 7]
-    
-    #słowniki które przechowują wszytkie dane, w zależności od wielkości ramki
-    faults_fifo = {3: [], 5: [], 7: []}
-    faults_lru = {3: [], 5: [], 7: []}
-    history_lines = {3: [], 5: [], 7: []}
+    frame_sizes = [3, 5, 10, 15, 20]
     
     #Główna pętla przechodząca przez 5 wygenerowanych scenariuszy (od 0 do 4)
     for scenariusz in range(scenariusz_num):
 
+        #słowniki które przechowują wszytkie dane, w zależności od wielkości ramki
+        faults_fifo = []
+        faults_lru = []
+        
         print("-"*25, f"Scenariusz [{scenariusz}]", "-"*25)
 
         #iterujemy po każdej wielkości ramki
@@ -121,14 +118,9 @@ def analiza_stron():
             avg_faults_fifo=0
             avg_faults_lru=0
             
-            #ilość zmian stron na caly plik
-            lines = 0
             for i in range(files_num):
                 #wczytujemy plik z danymi dla danego przypadku
                 data = load_pages(f"dane/strony/scenariusz[{scenariusz}]/dane_strony[{i}].txt")
-                
-                #ilość zmian
-                lines=len(data)
                 
                 #wykonujemy algorytmy dla zaladowanych danych
                 page_faults_fifo=FIFO(data, frame_size)
@@ -143,25 +135,21 @@ def analiza_stron():
             avg_faults_lru = avg_faults_lru/files_num
             
             #wypisujemy infomacje analizy ekspermynetów
-            print(f"Wielkość ramki: {frame_size}")
+            print(f"\nWielkość ramki: {frame_size}")
             
             print("[FIFO]")
             print(f"średnia błędów: {avg_faults_fifo}")
-            print(f"ilość linijek: {lines}\n")
             
             print("[LRU]")
             print(f"średnia błędów: {avg_faults_lru}")
-            print(f"ilość linijek: {lines}\n")
             
             #dodajmy nasze średnie do słowników które przechwoują średnia dla różnych ramek
-            faults_fifo[frame_size].append(avg_faults_fifo)
-            faults_lru[frame_size].append(avg_faults_lru)
-            history_lines[frame_size].append(lines)
+            faults_fifo.append(avg_faults_fifo)
+            faults_lru.append(avg_faults_lru)
     
-    #tworzymy wykresy dla przechowywanych danych
-    for frame_size in frame_sizes:
-        LruFifoGraph(frame_size, faults_fifo[frame_size], history_lines[frame_size], "FIFO", f"wykresy/strony/wykres_FIFO_ramka[{frame_size}].png")
-        LruFifoGraph(frame_size, faults_lru[frame_size], history_lines[frame_size], "LRU", f"wykresy/strony/wykres_LRU_ramka[{frame_size}].png")
+        #tworzymy wykresy dla przechowywanych danych
+        LruFifoGraph(frame_sizes, faults_fifo, "FIFO", f"wykresy/strony/wykres_FIFO_scenariusz[{scenariusz}].png", scenariusz)
+        LruFifoGraph(frame_sizes, faults_lru, "LRU", f"wykresy/strony/wykres_LRU_scenariusz[{scenariusz}].png", scenariusz)
 
 if __name__ == "__main__":
     analizuj_procesor()

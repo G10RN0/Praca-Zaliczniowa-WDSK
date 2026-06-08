@@ -4,8 +4,8 @@ from pomocneSkrypty.Dane import load_processes_for_time
 #algorytm FCFS
 def FCFS(input_processes: list[Process]):
     
-    #sortujemy dane
-    input_processes.sort(key=lambda x: x.arrivalTime)
+    #towrzymy kopie dancyh wejciowych
+    unprocessed = input_processes.copy()
     
     #globalny czas symulacji
     time=0
@@ -14,7 +14,7 @@ def FCFS(input_processes: list[Process]):
     avg_waitingTime=0
     avg_turnAroundTime=0
     
-    for process in input_processes:
+    for process in unprocessed:
         #jeśli nie ma procesów przetwarzanych to przewijamy od kolejnego procesu
         if time < process.arrivalTime:
             time = process.arrivalTime
@@ -33,8 +33,8 @@ def FCFS(input_processes: list[Process]):
         avg_turnAroundTime += process.turnAroundTime
     
     #obliczamy średnią
-    avg_turnAroundTime = avg_turnAroundTime/len(input_processes)
-    avg_waitingTime = avg_waitingTime/len(input_processes)
+    avg_turnAroundTime = avg_turnAroundTime/len(unprocessed)
+    avg_waitingTime = avg_waitingTime/len(unprocessed)
         
     #zwracamy średnie
     return avg_waitingTime, avg_turnAroundTime

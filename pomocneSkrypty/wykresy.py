@@ -7,16 +7,16 @@ plt.rcParams['axes.titlesize'] = 12 #ustawiamy wielkość tytułu
 plt.rcParams['axes.labelsize'] = 10 #ustawimy wielkość opisu
 
 #funkcja które generuje wykresy dla algorytmów LRU i FIFO
-def LruFifoGraph(frame_size: int, avg_fault: list[float], lines:list[int] , name_of_algorithm: str, path: str):
+def LruFifoGraph(frame_sizes: list[int], avg_fault: list[float], name_of_algorithm: str, path: str, scenariusz: int):
     
     #tworzymy nazwe dla wykresu
-    name = f"wielkość ramki: {frame_size}, dla {name_of_algorithm}"
+    name = f"{name_of_algorithm} dla scenariusza: {scenariusz}"
     
     #tworzymy obiekt wykresu
     fig, ax = plt.subplots(figsize=(8,5))
     
     #dodajemy wykres słupkowy o danych lines i avg_fault
-    ax.barh(lines, avg_fault, height=10)
+    ax.barh(frame_sizes, avg_fault, height=1)
     
     #ustawiamy nazwe wykresu
     ax.set_title(name)
@@ -26,7 +26,7 @@ def LruFifoGraph(frame_size: int, avg_fault: list[float], lines:list[int] , name
     ax.set_ylabel('ilość ramek')
     
     # ustawiamy znaczniki osi y zgodnie z listą ramek
-    ax.set_yticks(lines)
+    ax.set_yticks(frame_sizes)
 
     # ustawiamy zakres osi x tak, aby był trochę szerszy niż maksymalna liczba błędów
     max_val = max(avg_fault)

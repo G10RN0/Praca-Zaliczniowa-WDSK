@@ -21,10 +21,3 @@ def FIFO(pages: list[int], R: int) -> int:
     
     #zwracmy licznik błędów
     return page_faults
-
-if __name__ == "__main__":
-    pages = load_pages("dane/strony/dane_strony[0].txt")
-    
-    for size in [3, 5, 7]:
-        fifo_faults = FIFO(pages, size)
-        print(f"Błędy stron dla FIFO (R={size}): {fifo_faults}")

@@ -59,15 +59,9 @@ def roundRobin(processes: list[Process], timeQuanta: float):
         else:
             queued.append(current)
     
+    #obliczmy średnią dla wszystkich zakończnych procesów
     avg_turnAroundTime = sum(process.turnAroundTime for process in complited_process) / len(complited_process)
     avg_waitingTime = sum(process.waitingTime for process in complited_process) / len(complited_process)
         
     #zwracamy średnie
     return avg_waitingTime, avg_turnAroundTime
-
-if __name__ == "__main__":
-    timeQuanta=[0.5, 3, 5]
-    for quanta in timeQuanta:
-        print("")
-        print(f"Round Robin dla kwanty czasu: {quanta}")
-        roundRobin(load_processes_for_time("dane\\dane_czas_scenariusz[0]_[0].csv"), quanta)

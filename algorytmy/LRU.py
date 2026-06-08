@@ -22,10 +22,3 @@ def LRU(pages: list[int], R: int) -> int:
             frames.remove(page)
             frames.append(page)
     return page_faults
-
-if __name__ == "__main__":
-    pages = load_pages("dane/strony/dane_strony[0].txt")
-    
-    for size in [3, 5, 7]:
-        fifo_faults = LRU(pages, size)
-        print(f"Błędy stron dla FIFO (R={size}): {fifo_faults}")

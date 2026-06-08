@@ -38,8 +38,4 @@ def FCFS(input_processes: list[Process]):
         
     #zwracamy średnie
     return avg_waitingTime, avg_turnAroundTime
-    
-if __name__ == "__main__":
-    print(f"Algorytm FCFS:")
-    FCFS(load_processes_for_time("dane\\dane_czas_scenariusz[0]_[0].csv"))
         

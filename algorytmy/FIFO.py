@@ -1,5 +1,3 @@
-from pomocneSkrypty.Dane import load_pages
-
 #funkcja wykonująca algorymt FIFO
 def FIFO(pages: list[int], R: int) -> int:
     frames = []

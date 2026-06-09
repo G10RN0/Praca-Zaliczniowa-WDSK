@@ -1,5 +1,3 @@
-from pomocneSkrypty.Dane import load_pages
-
 def LRU(pages: list[int], R: int) -> int:
     frames = []
     page_faults = 0

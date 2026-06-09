@@ -1,6 +1,4 @@
-from pomocneSkrypty.Dane import load_processes_for_time
 from pomocneSkrypty.Proces import Process
-
 
 def roundRobin(processes: list[Process], timeQuanta: float):
     
